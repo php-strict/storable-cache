@@ -1,0 +1,27 @@
+{
+    "name": "php-strict/storable-cache",
+    "type": "library",
+    "description": "Storable cache store items more than their lifetime, up to time to save.",
+    "keywords": ["php","cache","storage","storable"],
+    "homepage": "https://github.com/php-strict/storable-cache",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Enikeishik",
+            "email": "enikeishik@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "php-strict/config": "dev-master"
+    },
+    "require-dev": {
+        "codeception/codeception": "^2.5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpStrict\\StorableCache\\": "src/"
+        }
+    }
+}
