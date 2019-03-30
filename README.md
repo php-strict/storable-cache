@@ -5,8 +5,14 @@
 Storable cache store items more than their lifetime, up to time to save, 
 and allow use stored items after expiration, in cases, for example, of db overload or errors.
 
-Supported storages: arrays (not real storage, only for testing), files, 
-memcached, redis, SQLite, MySQL (uses main db connection from app).
+Supported storages:
+
+*   arrays (not real storage, only for testing),
+*   files,
+*   memcached,
+*   redis,
+*   SQLite,
+*   MySQL (uses main db connection from app).
 
 ## Requirements
 
