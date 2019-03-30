@@ -26,8 +26,8 @@ composer require php-strict/storable-cache
 Basic usage:
 
 ```php
-use PhpStrict\Config\Config
-use PhpStrict\StorableCache\StorableCache
+use PhpStrict\Config\Config;
+use PhpStrict\StorableCache\StorableCache;
 
 //instance of application configuration class, extending Config
 //must provide cacheType property with correct storable cache type
@@ -51,7 +51,7 @@ $cache->set('contentKey', $content, 60, 3600);
 Usage if content generating main process was failed and it is correct to use expired data:
 
 ```php
-use PhpStrict\StorableCache\StorableCache
+use PhpStrict\StorableCache\StorableCache;
 
 //part of generating content method
 
