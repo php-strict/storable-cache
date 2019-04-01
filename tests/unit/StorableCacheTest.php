@@ -286,7 +286,9 @@ class StorableCacheTest extends \Codeception\Test\Unit
             return;
         }
         $config->cacheType = StorageTypes::ST_MYSQL;
-        $cache = new StorableCache($config);
+        $mysqli = new \mysqli($config->dbHost, $config->dbUser, $config->dbPassword, $config->dbName);
+        
+        $cache = new StorableCache($config, $mysqli);
         $this->testCacheCases($cache);
         
         $config->cacheMysqlTable = 'non_exists_field';
@@ -295,7 +297,7 @@ class StorableCacheTest extends \Codeception\Test\Unit
         $config->cacheMysqlTimestampField = 'non_exists_field';
         $config->cacheMysqlLifetimeField = 'non_exists_field';
         $config->cacheMysqlSavetimeField = 'non_exists_field';
-        $cache = new StorableCache($config);
+        $cache = new StorableCache($config, $mysqli);
         $this->testCacheCasesFail($cache);
     }
     
