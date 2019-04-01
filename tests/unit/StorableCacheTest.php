@@ -112,11 +112,11 @@ class StorableCacheTest extends \Codeception\Test\Unit
             public $storage;
         };
         $this->expectedException(
-            \Ufo\StorableCache\BadPacketException::class, 
+            \PhpStrict\StorableCache\BadPacketException::class, 
             function() use($cache) { $cache->storage->getPacket('any-key'); }
         );
         $this->expectedException(
-            \Ufo\StorableCache\BadPacketException::class, 
+            \PhpStrict\StorableCache\BadPacketException::class, 
             function() use($cache) { $cache->storage->getValue('any-key'); }
         );
     }
@@ -159,7 +159,6 @@ class StorableCacheTest extends \Codeception\Test\Unit
         
         $config = new Config();
         $config->cacheType = StorageTypes::ST_FILES;
-        $config->rootPath = '';
         $config->cacheDir = $cacheDir;
         $cache = new StorableCache($config);
         
@@ -177,13 +176,13 @@ class StorableCacheTest extends \Codeception\Test\Unit
         
         $config->cacheDir = '';
         $this->expectedException(
-            \Ufo\StorableCache\StorageConnectException::class, 
+            \PhpStrict\StorableCache\StorageConnectException::class, 
             function() use($config) { $cache = new StorableCache($config); }
         );
         
         $config->cacheDir = $badCacheDir;
         $this->expectedException(
-            \Ufo\StorableCache\StorageConnectException::class, 
+            \PhpStrict\StorableCache\StorageConnectException::class, 
             function() use($config) { $cache = new StorableCache($config); }
         );
         
@@ -208,7 +207,7 @@ class StorableCacheTest extends \Codeception\Test\Unit
         $config->cacheMemcachedPort = 11211;
         try {
             $cache = new StorableCache($config);
-        } catch (CacheStorageConnectException $e) {
+        } catch (StorageConnectException $e) {
             //disable tests if memcached service is not running
             return;
         }
@@ -248,7 +247,7 @@ class StorableCacheTest extends \Codeception\Test\Unit
         $config->cacheRedisHost = 'localhost';
         $config->cacheRedisPort = 16379;
         $this->expectedException(
-            \Ufo\StorableCache\StorageConnectException::class, 
+            \PhpStrict\StorableCache\StorageConnectException::class, 
             function() use($config) { $cache = new StorableCache($config); }
         );
     }
@@ -260,8 +259,7 @@ class StorableCacheTest extends \Codeception\Test\Unit
     {
         $config = new Config();
         $config->cacheType = StorageTypes::ST_SQLITE;
-        $config->rootPath = '';
-        $config->cacheDir = dirname(__DIR__) . '/_data';
+        $config->cacheSqliteBase = dirname(__DIR__) . '/_data/cache.db';
         $cache = new StorableCache($config);
         $this->testCacheCases($cache);
         
@@ -281,7 +279,12 @@ class StorableCacheTest extends \Codeception\Test\Unit
     public function testCacheMysqlStorage()
     {
         $config = new Config();
-        $config->loadFromIni(dirname(__DIR__) . '/_data/.config', true);
+        try {
+            $config->loadFromIni(dirname(__DIR__) . '/_data/mysql.cfg', true);
+        } catch (PhpStrict\Config\FileNotExistsException $e) {
+            //disable tests if mysql config is not present
+            return;
+        }
         $config->cacheType = StorageTypes::ST_MYSQL;
         $cache = new StorableCache($config);
         $this->testCacheCases($cache);
@@ -301,7 +304,7 @@ class StorableCacheTest extends \Codeception\Test\Unit
         $config = new Config();
         $config->cacheType = '';
         $this->expectedException(
-            \Ufo\StorableCache\StorageNotSupportedException::class, 
+            \PhpStrict\StorableCache\StorageNotSupportedException::class, 
             function() use($config) { $cache = new StorableCache($config); }
         );
     }
