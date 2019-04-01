@@ -90,7 +90,7 @@ class MysqlStorage extends AbstractStorage
      */
     public function has(string $key): bool
     {
-        $sql =  'SELECT COUNT(*) AS Cnt FROM #__' . $this->table
+        $sql =  'SELECT COUNT(*) AS Cnt FROM `' . $this->table . '`'
                 . " WHERE `" . $this->keyField . "`='" . $this->db->real_escape_string($key) . "'";
         
         $result = $this->db->query($sql);
@@ -160,7 +160,7 @@ class MysqlStorage extends AbstractStorage
     public function set(string $key, string $value, int $lifetime, int $savetime): bool
     {
         if (!$this->has($key)) {
-            $sql =  'INSERT INTO #__' . $this->table
+            $sql =  'INSERT INTO `' . $this->table . '`'
                     . '('
                     . '`' . $this->keyField . '`, '
                     . '`' . $this->valueField . '`, '
@@ -176,7 +176,7 @@ class MysqlStorage extends AbstractStorage
                     . "'" . $savetime . "'"
                     . ')';
         } else {
-            $sql =  'UPDATE #__' . $this->table
+            $sql =  'UPDATE `' . $this->table . '`'
                     . ' SET '
                     . '`' . $this->valueField . '`=' . "'" . $this->db->real_escape_string($value) . "',"
                     . '`' . $this->timestampField . '`=' . "'" . time() . "',"
@@ -197,7 +197,7 @@ class MysqlStorage extends AbstractStorage
      */
     public function delete(string $key): bool
     {
-        $sql =  'DELETE FROM #__' . $this->table
+        $sql =  'DELETE FROM `' . $this->table . '`'
                 . " WHERE `" . $this->keyField
                 . "`='" . $this->db->real_escape_string($key) . "'";
         return $this->db->query($sql);
@@ -223,7 +223,7 @@ class MysqlStorage extends AbstractStorage
      */
     public function clear(): bool
     {
-        $sql =  'TRUNCATE #__' . $this->table;
+        $sql =  'TRUNCATE `' . $this->table . '`';
         return $this->db->query($sql);
     }
 }
