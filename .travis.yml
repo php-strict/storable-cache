@@ -1,0 +1,24 @@
+language: php
+dist: trusty
+sudo: required
+php:
+  - '7.1'
+  - '7.2'
+  - '7.3'
+services:
+  - mysql
+  - redis-server
+before_install:
+  - mysql -e 'CREATE DATABASE storable-cache-tests-db;'
+before_script:
+  # - echo "extension=memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  # - echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - echo "extension=redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - composer install
+script:
+  - php -v
+  - phpunit --version
+  - vendor/bin/codecept --version
+  - vendor/bin/codecept run unit --coverage --coverage-xml
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
