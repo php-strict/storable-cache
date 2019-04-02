@@ -63,6 +63,24 @@ class SqliteStorage extends AbstractStorage
      */
     public function __construct(object $settings)
     {
+        $this->setFields($settings);
+        
+        try {
+            $this->db = new \SQLite3($this->base);
+        } catch (\Exception $e) {
+            throw new StorageConnectException($e->getMessage());
+        } catch (\Throwable $e) {
+            throw new StorageConnectException($e->getMessage());
+        }
+    }
+    
+    /**
+     * Sets class fields values from settings.
+     * 
+     * @param object $settings DB connection and other settings
+     */
+    protected function setFields(object $settings)
+    {
         if (isset($settings->base)) {
             $this->base = $settings->base;
         }
@@ -83,14 +101,6 @@ class SqliteStorage extends AbstractStorage
         }
         if (isset($settings->savetimeField)) {
             $this->savetimeField = $settings->savetimeField;
-        }
-        
-        try {
-            $this->db = new \SQLite3($this->base);
-        } catch (\Exception $e) {
-            throw new StorageConnectException($e->getMessage());
-        } catch (\Throwable $e) {
-            throw new StorageConnectException($e->getMessage());
         }
     }
     
