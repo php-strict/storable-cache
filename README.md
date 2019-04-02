@@ -1,6 +1,7 @@
 # Storable Cache
 
 [![Software License][ico-license]](LICENSE.txt)
+[![Build Status][ico-travis]][link-travis]
 
 Storable cache store items more than their lifetime, up to time to save, 
 and allow use stored items after expiration, in cases, for example, of db overload or errors.
@@ -80,3 +81,5 @@ vendor\bin\codecept run
 ```
 
 [ico-license]: https://img.shields.io/badge/license-GPL-brightgreen.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/php-strict/storable-cache/master.svg?style=flat-square
+[link-travis]: https://travis-ci.org/php-strict/storable-cache
