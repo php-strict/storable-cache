@@ -17,7 +17,7 @@ Supported storages:
 
 ## Requirements
 
-*   PHP >= 7.1
+*   PHP >= 7.2
 *   [php-strict/config](https://github.com/php-strict/config)
 
 ## Install
