@@ -79,7 +79,7 @@ class StorableCache implements StorableCacheInterface
             
             case StorageTypes::ST_REDIS:
                 return new RedisStorage(
-                    $config->cacheRedisdHost ?? null, 
+                    $config->cacheRedisHost ?? null, 
                     $config->cacheRedisPort ?? null
                 );
             
