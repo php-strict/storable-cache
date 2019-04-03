@@ -105,7 +105,7 @@ class MysqlStorage extends AbstractStorage
             return 0 < (int) $row['Cnt'];
         }
         
-        return false;
+        return false; //@codeCoverageIgnore
     }
     
     /**
