@@ -7,6 +7,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+declare(strict_types=1);
+
 namespace PhpStrict\StorableCache;
 
 /**
@@ -136,9 +138,9 @@ class MysqlStorage extends AbstractStorage
             
             return new Packet(
                 $row[$this->valueField], 
-                $row[$this->lifetimeField], 
-                $row[$this->savetimeField], 
-                $row[$this->timestampField]
+                (int) $row[$this->lifetimeField], 
+                (int) $row[$this->savetimeField], 
+                (int) $row[$this->timestampField]
             );
         } catch (\Throwable $e) {
             throw new BadPacketException($e->getMessage(), $e->getCode(), $e);
@@ -171,17 +173,17 @@ class MysqlStorage extends AbstractStorage
                     . ' VALUES('
                     . "'" . $this->db->real_escape_string($key) . "',"
                     . "'" . $this->db->real_escape_string($value) . "',"
-                    . "'" . time() . "',"
-                    . "'" . $lifetime . "',"
-                    . "'" . $savetime . "'"
+                    . "'" . ((string) time()) . "',"
+                    . "'" . ((string) $lifetime) . "',"
+                    . "'" . ((string) $savetime) . "'"
                     . ')';
         } else {
             $sql =  'UPDATE `' . $this->table . '`'
                     . ' SET '
                     . '`' . $this->valueField . '`=' . "'" . $this->db->real_escape_string($value) . "',"
-                    . '`' . $this->timestampField . '`=' . "'" . time() . "',"
-                    . '`' . $this->lifetimeField . '`=' . "'" . $lifetime . "',"
-                    . '`' . $this->savetimeField . '`=' . "'" . $savetime . "'"
+                    . '`' . $this->timestampField . '`=' . "'" . ((string) time()) . "',"
+                    . '`' . $this->lifetimeField . '`=' . "'" . ((string) $lifetime) . "',"
+                    . '`' . $this->savetimeField . '`=' . "'" . ((string) $savetime) . "'"
                     . ' WHERE `' . $this->keyField . '`='
                     . "'" . $this->db->real_escape_string($key) . "'";
         }

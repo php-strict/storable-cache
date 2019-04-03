@@ -7,6 +7,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+declare(strict_types=1);
+
 namespace PhpStrict\StorableCache;
 
 /**
@@ -150,9 +152,9 @@ class SqliteStorage extends AbstractStorage
             $row = $this->db->querySingle($sql, true);
             return new Packet(
                 $row[$this->valueField], 
-                $row[$this->lifetimeField], 
-                $row[$this->savetimeField], 
-                $row[$this->timestampField]
+                (int) $row[$this->lifetimeField], 
+                (int) $row[$this->savetimeField], 
+                (int) $row[$this->timestampField]
             );
         } catch (\Throwable $e) {
             throw new BadPacketException($e->getMessage(), $e->getCode(), $e);
@@ -185,17 +187,17 @@ class SqliteStorage extends AbstractStorage
                     . ' VALUES('
                     . "'" . $this->db->escapeString($key) . "',"
                     . "'" . $this->db->escapeString($value) . "',"
-                    . "'" . time() . "',"
-                    . "'" . $this->db->escapeString($lifetime) . "',"
-                    . "'" . $this->db->escapeString($savetime) . "'"
+                    . "'" . ((string) time()) . "',"
+                    . "'" . $this->db->escapeString((string) $lifetime) . "',"
+                    . "'" . $this->db->escapeString((string) $savetime) . "'"
                     . ')';
         } else {
             $sql =  'UPDATE "' . $this->table . '"'
                     . ' SET '
                     . '"' . $this->valueField . '"=' . "'" . $this->db->escapeString($value) . "',"
-                    . '"' . $this->timestampField . '"=' . "'" . time() . "',"
-                    . '"' . $this->lifetimeField . '"=' . "'" . $lifetime . "',"
-                    . '"' . $this->savetimeField . '"=' . "'" . $savetime . "'"
+                    . '"' . $this->timestampField . '"=' . "'" . ((string) time()) . "',"
+                    . '"' . $this->lifetimeField . '"=' . "'" . ((string) $lifetime) . "',"
+                    . '"' . $this->savetimeField . '"=' . "'" . ((string) $savetime) . "'"
                     . ' WHERE "' . $this->keyField . '"='
                     . "'" . $this->db->escapeString($key) . "'";
         }

@@ -7,6 +7,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+declare(strict_types=1);
+
 namespace PhpStrict\StorableCache;
 
 class StorageConnectException extends StorableCacheException

@@ -7,6 +7,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+declare(strict_types=1);
+
 namespace PhpStrict\StorableCache;
 
 /**
@@ -93,7 +95,7 @@ class MemcachedStorage extends AbstractStorage
      */
     public function getPacket(string $key): Packet
     {
-        $packet = unserialize($this->db->get($key));
+        $packet = unserialize((string) $this->db->get($key));
         if (false === $packet || !($packet instanceof Packet)) {
             throw new BadPacketException();
         }
