@@ -67,8 +67,6 @@ class SqliteStorage extends AbstractStorage
         
         try {
             $this->db = new \SQLite3($this->base);
-        } catch (\Exception $e) {
-            throw new StorageConnectException($e->getMessage());
         } catch (\Throwable $e) {
             throw new StorageConnectException($e->getMessage());
         }
