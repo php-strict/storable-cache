@@ -274,7 +274,7 @@ class StorableCacheTest extends \Codeception\Test\Unit
         
         $config = new Config();
         $config->cacheType = StorageTypes::ST_SQLITE;
-        $config->cacheSqliteBase = ':'; //bad db name
+        $config->cacheSqliteBase = ':/'; //bad db name
         $this->expectedException(
             \PhpStrict\StorableCache\StorageConnectException::class, 
             function() use($config) { $cache = new StorableCache($config); }
