@@ -271,6 +271,14 @@ class StorableCacheTest extends \Codeception\Test\Unit
         $config->cacheSqliteSavetimeField = 'non_exists_field';
         $cache = new StorableCache($config);
         $this->testCacheCasesFail($cache);
+        
+        $config = new Config();
+        $config->cacheType = StorageTypes::ST_SQLITE;
+        $config->cacheSqliteBase = ':'; //bad db name
+        $this->expectedException(
+            \PhpStrict\StorableCache\StorageConnectException::class, 
+            function() use($config) { $cache = new StorableCache($config); }
+        );
     }
     
     /**
