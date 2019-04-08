@@ -3,6 +3,7 @@
 [![Software License][ico-license]](LICENSE.txt)
 [![Build Status][ico-travis]][link-travis]
 [![codecov][ico-codecov]][link-codecov]
+[![Codacy Badge][ico-codacy]][link-codacy]
 
 Storable cache store items more than their lifetime, up to time to save, 
 and allow use stored items after expiration, in cases, for example, of db overload or errors.
@@ -86,3 +87,5 @@ vendor\bin\codecept run
 [link-travis]: https://travis-ci.org/php-strict/storable-cache
 [ico-codecov]: https://codecov.io/gh/php-strict/storable-cache/branch/master/graph/badge.svg
 [link-codecov]: https://codecov.io/gh/php-strict/storable-cache
+[ico-codacy]: https://api.codacy.com/project/badge/Grade/366c3c7dd10641bea76ba5d2dcdfd6b6
+[link-codacy]: https://www.codacy.com/app/php-strict/storable-cache?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=php-strict/storable-cache&amp;utm_campaign=Badge_Grade
